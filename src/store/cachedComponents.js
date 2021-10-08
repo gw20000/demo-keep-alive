@@ -7,6 +7,10 @@ const cachedComponents =  {
         path2CompNameMap:{
            "/stafflist":'StaffList',
            "/orderlist":'OrderList',
+           "/about" :'About',
+           "/chat":'Chat',
+           "/friends":'Friends',
+           "/news":'News',
 
         },
         cachedComponents:[],

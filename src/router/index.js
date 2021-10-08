@@ -32,7 +32,8 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '@/views/OrderList'),
         meta:{
-          title:"订单列表"
+          title:"订单列表",
+          module:"订单管理"
          }
       },
       {
@@ -43,11 +44,61 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '@/views/StaffList'),
         meta:{
-          title:"员工列表"
+          title:"员工列表",
+          module:"员工管理"
          }
 
-      }
-
+      },
+      {
+        path: '/news',
+        name: 'News',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '@/views/News'),
+        meta:{
+         title:"新闻",
+        },
+      },
+    
+            {
+              path: '/about',
+              name: 'About',
+              // route level code-splitting
+              // this generates a separate chunk (about.[hash].js) for this route
+              // which is lazy-loaded when the route is visited.
+              component: () => import(/* webpackChunkName: "about" */ '@/views/PersonalCenter/About'),
+              meta:{
+               title:"个人信息",
+               module:"个人中心"
+              },
+            },
+            {
+              path: 'chat',
+              name: 'Chat',
+              // route level code-splitting
+              // this generates a separate chunk (about.[hash].js) for this route
+              // which is lazy-loaded when the route is visited.
+              component: () => import(/* webpackChunkName: "about" */ '@/views/PersonalCenter/Chat'),
+              meta:{
+               title:"聊天",
+               module:"个人中心"
+              },
+            },
+            {
+              path: 'friends',
+              name: 'Friends',
+              // route level code-splitting
+              // this generates a separate chunk (about.[hash].js) for this route
+              // which is lazy-loaded when the route is visited.
+              component: () => import(/* webpackChunkName: "about" */ '@/views/PersonalCenter/Friends'),
+              meta:{
+               title:"好友",
+               module:"个人中心"
+              },
+            },
+            
+    
 
     ]
   },
@@ -72,8 +123,16 @@ const routes = [
     meta:{
      title:"404"
     }
-  }
+  },
+  
+
+
 ]
+
+
+
+
+
 
 const router = new VueRouter({
   mode: 'history',

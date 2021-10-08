@@ -24,7 +24,7 @@
   text-align: center;
   color: #2c3e50;
 
-    .full-relative-father(fixed);
+    .full-pos-father(fixed);
 }
 
 #nav {

@@ -32,3 +32,5 @@ a{
         width:100%;
     }
 }
+
+input,select,option,textarea{outline: none;}

@@ -12,6 +12,12 @@
            <template #default>
             
               <Header :headerData="cachedComponents" :sideAsideWidth="isCollpase ? 0 : 200" />
+               <div class="route-pointer">
+             {{`上海青浦苏宁电器管理系统 ${$route.meta.module ? "/ "+$route.meta.module : ''} / ${$route.meta.title}`}}
+              </div>
+        
+              
+         
               <keep-alive :include="cachedCompNames" :max="10">
               <RouterView/>
               </keep-alive>
@@ -70,8 +76,12 @@ mounted(){
 
 .layout-container{
   
-    .full-relative-father(fixed);
+    .full-pos-father(fixed);
 }
 
+
+.route-pointer{
+  text-align: left;
+}
 
 </style>

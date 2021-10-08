@@ -1,11 +1,30 @@
 
+//提供各种混合样式 （目的： 重用样式） 就像js函数一样，可以代码复用 ,简言之, 提供混合类样式
+
+//在有定位父级中  居中
+.self-center-pos(@pos:absolute){
+	
+
+    position:@pos;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+   }
 
 
 //撑满有定位的父级
-.full-relative-father(@pos:absolute) {
+.full-pos-father(@pos:absolute) {
     position: @pos;
      left:0px;
      top:0px;
      height: 100%;
      width:100%;
 }
+
+
+.d-f-c{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+ 

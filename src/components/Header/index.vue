@@ -1,16 +1,40 @@
 <template>
-    <div class="header-container bg-dark " id="scroll-1" ref="header"    :style="{width:`${headerWidth}px`}" >
+                                                       
+    <div class="header-container bg-dark " ref="header"   :style="{width:`${headerWidth}px`}"    >
+        <!-- left-collapse控制按钮 -->
         <!-- <div class="slide-left"> -->
          <!-- <i class="bi-chevron-bar-left" style="font-size: 2rem; color: white;"></i> -->
-         <i @click="collpaseToggle"  class="bi bi-list" style="font-size: 2rem; color: whitesmoke;width:44px;"></i>
+         <i @click="collpaseToggle"  class=" collpase-tog-btn bi bi-list" style="font-size: 2rem; color: whitesmoke;width:44px;"></i>
        <!-- </div> -->
 
+<!-- :style="{width:`${headerWidth-220}px`}"  -->
+       <!-- 页面缓存 -->
+       <div class="cache-pages "  id="scroll-1"   >
         <div  class="cache-item"  v-for=" (item,i) in headerData" :key="i">
        <router-link  :to="`${item.to}`" style="text-decoration:none;">
        <Item   style="min-width:100px;draggable:true;" :content="item.name" />
         </router-link>
          <span  @click="removeCacheComp(item.to)"    style="width:15px;cursor:pointer">x</span>
         </div>
+      </div>
+
+      <!-- 登录或注销 -->
+      <div class="login-logout">
+      <a-dropdown>
+    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+      张居正 <a-icon type="down" />
+    </a>
+    <a-menu slot="overlay" >
+      <a-menu-item  >
+        <a href="javascript:;" class="slect-item"><a-icon  type="logout" /> <span >注销登录</span></a>
+      </a-menu-item>
+        <a-menu-item >
+        <a href="javascript:;" class="slect-item"><a-icon type="lock"  /><span>修改密码</span></a>
+      </a-menu-item>
+    </a-menu>
+  </a-dropdown>
+  </div>
+
     </div>
 </template>
 
@@ -65,10 +89,11 @@ mounted(){
 </script>
 
 <style lang="less" scoped>
-
+@import "~@/styles/mixin.less";
 .header-container{
+// position: relative;
 transition: width .5s;
-width:100%;
+// width:100%;
 height: 50px;
 display: flex;
 align-items: center;
@@ -76,7 +101,7 @@ align-items: center;
 flex-wrap: nowrap;
 // flex-wrap: wrap;
 // white-space: nowrap;
-overflow-x:scroll!important;
+// overflow-x:scroll!important;
 
 
 }
@@ -115,4 +140,50 @@ background:#82AFFF;
 #scroll-1::-webkit-scrollbar-resizer {
 background:#FF0BEE;
 }
+
+.collpase-tog-btn{
+      flex: 0 0 44px;
+}
+
+.login-logout{
+  width: 80px;
+  flex: 0 0 80px;
+
+  
+//   position:absolute;
+// background-color: blue;
+//   top:50%;
+//   transform: translateY(-50%);
+//   right:10px;
+ 
+
+}
+
+.cache-pages{
+    display: flex;
+    flex-wrap: nowrap;
+    // width:250px;
+    overflow: auto;
+    flex: 1 1 250px ;
+    
+}
+
+
+
+@media (max-width:650px) {
+  
+    .header-container{
+        width:100vw !important;
+    }
+    // .cache-pages{
+    //       width:250px !important;
+    // }
+}
+
+.slect-item{
+    .d-f-c();
+}
+
+
+
 </style>

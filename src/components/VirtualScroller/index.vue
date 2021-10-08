@@ -87,10 +87,11 @@ export default {
               // console.log(this.showData);
             },
             handleLastChildBottomBorder(innerContainer,innerH,outerClientHAndSTop){
-              
+                
                   const yuliang = 20;
               if(innerH-outerClientHAndSTop<=yuliang){
-                    innerContainer.children[innerContainer.children.length-1].children[0].style.border=" 0px ";
+                  // console.log("delete border");
+                    innerContainer.children[innerContainer.children.length-1].children[0].style.borderBottomColor=" transparent ";
               }
             }
             

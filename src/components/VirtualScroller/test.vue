@@ -9,7 +9,7 @@
 
           <!-- 🔥插槽内容中的数据 只有子组件中才有， 所以，需要 子组件需要通过绑定插槽数据（绑定一个插槽数据为动态数据），来向父组件传递数据，  即要使用 作用域插槽 ： 子组件通过插槽向父组件传递数据 -->
            <template v-slot:default = "{item}" >
-                 <ListItem :itemData = item  class="item"/>
+                 <ListItem :itemData = item  class="list-item"/>
            </template>
                      
           </VirtualScroller>
@@ -100,7 +100,7 @@ box-sizing: border-box;
 
 }
 
-.item{ 
+.list-item{ 
   box-sizing: border-box;
   // margin: 10px 0px;
   // padding: 10px;

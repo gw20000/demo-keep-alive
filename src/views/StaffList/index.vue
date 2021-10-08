@@ -2,57 +2,283 @@
   <div class="about-container" >
     <h1>员工列表</h1>
      <Input placeholder="Search staffs..." @input="val=$event"/>
-     <!-- <keep-alive :include="['VirtualScroller']" > -->
-     <VirtualScroller  class="longlist"  style="font-size:16px;"  :data="data"  :itemHeight="50" :keyField="'id'">
-               <!-- <keep-alive :include="['ListItem']" :max="100"> -->
-               <template v-slot:default = "{item}" >
-                 <!-- <keep-alive  :include="['ListItem']" :max="100"> -->
-                 <ListItem :itemData = item  class="item"/>
-                  <!-- </keep-alive> -->
-              </template>
-               <!-- </keep-alive> -->
-     </VirtualScroller>
-       <!-- </keep-alive> -->
+  <div class="statfflist-menu d-flex justify-content-between px-3" ref="msgContainer">
+     <a-button type="primary" @click="handleAdd">新增员工<i class="bi bi-person-plus"></i></a-button>
+
+     <!-- <button type="button" class="btn btn-primary" @click="handleAdd" >新增员工<i class="bi bi-person-plus"></i></button> -->
+     <a-button   :loading="isExporting"  @click="showConfirm"  class="export">导出excel<i class="bi bi-file-earmark-excel"></i> </a-button>
+     <!-- <button type="button" class="btn btn-outline-primary" >导出excel<i class="bi bi-file-earmark-excel"></i></button>
+  -->
+  </div>
+
+
+
+
+<!-- 模态框 -->
+
+<Modal v-model="visible" @success=" gengxin({addSuccess:$event}) "/>
+
+<!-- <div class="test-container" style="background-color:green;height:500px;width:500px;position:fixed;z-index:1050;" @click="$event.target.style.backgroundColor='red'">  
+
+</div> -->
+
+<!-- 员工列表 -->
+  <table class="table" >
+  <thead style="border-bottom:1px solid black">
+    <tr>
+      <th scope="col">编号</th>
+      <th scope="col">姓名</th>
+      <th scope="col">性别</th>
+      <th scope="col">创建时间</th>
+      <th scope="col" >操作</th>
+    </tr>
+  </thead>
+  <tbody>
+<!--     
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr> -->
+
+
+
+    <tr v-for="item in data" :key="item.id">
+      <th scope="row">{{item.id}}</th>
+      <td>{{item.name}}</td>
+      <td>{{item.sex}}</td>
+      <td>{{date.getFormatText(item.createTime,true,true)}}</td>
+       <td style="color:#0d6efd;cursor:pointer">详情</td>
+      <td style="color:#0d6efd;cursor:pointer" @click="handleDel(item.id)" >删除</td>
+    </tr>
+  
+
+      
+
+
+  </tbody>
+
+</table>
+
+
+<PageNav  :dataAmount="dataAmount" :pageItems="pageItems" :showPageNumbers="8"  v-model="activePag" :initPageNav="initPageNav" />
+
+
   </div>
 </template>
 
 <script>
-import { getAll} from "@/api/staffs"
+
+import { getAll,getStaffListByPage,add,del} from "@/api/staffs"
 import Input from "@/components/Input"
-import VirtualScroller from "@/components/VirtualScroller"
-import ListItem from "@/components/ListItem"
-import {tree} from "@/utils"
+
+import {tree,date,export2excel,showMessage} from "@/utils"
 // import {mapState} from "vuex"
+import PageNav from "@/components/PageNav"
+// import XLSX  from "xlsx"
+// import {saveAs} from 'file-saver'
+
+
+// console.log(XLSX);
+// console.log(saveAs);
+// console.log(export2Excel);
+
+// console.log( export_json_to_excel);
+
+// activePage
+console.log(export2excel);
+
+let columns=[
+  {title:"编号",key:'id'},
+   {title:"姓名",key:"name"},
+     {title:"性别",key:"sex"},
+       {title:"创建时间",key:"createTime"}
+
+]
+
+
 export default {
   name:"StaffList",
   components:{
     Input,
-    VirtualScroller,
-    ListItem,
+    PageNav,
+   
+ 
 
   },
   data() {
       return {
+        //当前页数据
         data:[],
-        // n:0,
+        date,
         val:"",
+        //页容量
+       pageItems:4,
+       //总数据量
+       dataAmount:0,
+       visible:false,
+       totalData:[],
+       del,
+       isExporting:false,
+       n:0,
+       activePag:0,
+       initPageNav:false,
+       
        
       }
   },
-  // computed:{
-  //   ...mapState(),
-  // },
-  methods:{
+  computed:{
+    // ...mapState(),
+     //将 对象集合 转换成  二维数组  (我：该二维数组，目前项目中暂未用到)
+   mapData(){
+     console.log("执行了3");
+     if(this.totalData==null || this.totalData.length==0 ) return [];
+    // const keys =  Object.keys(this.totalData[0]);
+   const  totalData = this.totalData.map((i)=>{
+        const arr = [];
+
+        
+        for(const prop in i ){
+            arr.push(i[prop]);
+        }
+       return arr;
+    });
+    return totalData;
+
+   },
+
+   mapTotal(){
+
      
-      async getAllStudents(){
-        // console.log("1111");
-          this.data = await getAll();
-            //  console.log("2222");
-       },
-      //  getRandomH(min,max){
-      //   return Math.floor(Math.random()*(max-min+1))+min;
-      //  }
+      const mapTotalData = this.totalData.map((i)=>{
+
+          return {id:i.id,name:i.name,sex:i.sex,createTime:date.getFormatText(i.createTime,true,true)};
+            
+            
+        });
+
+
+      
+
+     return    [ { columns,data: mapTotalData , sheet_name:`${process.env.VUE_APP_TITLE}-员工名单`}]
+      
+   }
+
+
+    
   },
+  methods:{
+
+     showConfirm() {
+      this.$confirm({
+        title: '确定要下载员工列表到excel文件吗?',
+        // content: 'When clicked the OK button, this dialog will be closed after 1 second',
+         okText: '确认',
+        cancelText: '取消',
+        onOk:()=> {
+
+              // console.log("download stafflist to excel");
+
+              this.export2Excel();
+
+        },
+        onCancel:()=>{
+              //  console.log("cancel  download stafflist to excel file");
+
+        },
+      });
+    },
+     
+      // async getAllStudents(){
+      //   // console.log("1111");
+      //     this.data = await getAll();
+      //     console.log(this.data);
+      //       //  console.log("2222");
+      //  },
+      //获取指定页的员工列表数据
+   async getStaffsByPage(page){
+       this.activePag = page;
+      //  console.log(page);
+         const resp = await  getStaffListByPage(page,this.pageItems);
+         this.data = resp.pageData;
+         console.log("dataAmount",resp.dataAmount);
+         this.dataAmount = resp.dataAmount;
+
+    },
+     handleAdd(){
+         
+           this.visible = true;
+              console.log(this.visible);
+          //  let result = await add({name:options.name,id:options.id});
+    },
+    async handleDel(id){
+            let {success} = await del(id);
+            if(success){
+              console.log("删除成功");
+              showMessage({content:"删除成功",type:"success",container:this.$refs.msgContainer});
+               this.gengxin();
+            }else{
+               console.log("删除失败");
+              showMessage({content:"删除失败",type:"error",container:this.$refs.msgContainer});
+            }
+    },
+    async getAllStaffs(){
+       console.log("执行了1");
+          this.totalData = await getAll();
+    },
+    
+    async gengxin(options){
+      //如果是 删除
+      if(!options ){
+        // await  this.getAllStaffs();
+         this.getStaffsByPage(1) ;
+         
+          return;
+      }
+      //如果是 添加
+      if(options.addSuccess) {
+        showMessage({content:"添加成功",type:"success",container:this.$refs.msgContainer});
+          //  await this.getAllStaffs();
+        this.getStaffsByPage(1) ;
+
+         //如果 编辑，也想初始化页码PageNav组件的状态到第一页， 其实，没有这个需求。 （🌈编辑时，需求是重新获取当前页）
+        // this.initPageNav = true;
+        // this.$nextTick(()=>{
+        //      this.initPageNav = false;
+        // });
+         
+      }
+      else showMessage({content:"添加失败",type:"error",container:this.$refs.msgContainer});
+
+         
+    },
+    async export2Excel(){
+          this.isExporting = true;
+
+          // setTimeout(()=>{
+          //   this.isExporting = false;
+          // },2000);
+
+           await this.getAllStaffs();
+            this.isExporting = false;
+          export2excel(`myexcel${++this.n}员工名单.xlsx`,this.mapTotal);
+
+    //  { columns, data, sheet_name }
+    }
+  },
+
+
+
+
+
   watch:{
 
       val(){
@@ -64,11 +290,28 @@ export default {
           tree.breadthSearch();
           //搜索的时候，动态显示一个下拉框， 点击下拉框中的一个item，会弹出一个模态框 显示item的具体信息。
 
+      },
+
+      mapData(){
+         console.log("执行了2");
+        console.log(this.mapData);
+      },
+      activePag(){
+            console.log("activePag",this.activePag);
+             this.getStaffsByPage(this.activePag);
+
+            //  console.log(activePage);
       }
+
+
   },
-   created(){
+    async created(){
         
-          this.getAllStudents();
+      //  this.getAllStudents();
+
+      this.getStaffsByPage(1);
+     this.getAllStaffs();
+       
      
       },
 
@@ -82,8 +325,6 @@ export default {
       //   console.log("StaffList 隐藏了");
       //   this.getAllStudents();
       // },
-
-      
 
 
 
@@ -101,44 +342,13 @@ h1{
   margin-top: 8px;
   
 }
-
-
-.longlist{
-box-sizing: border-box;
-  color: red;
-  height: 500px;
-  // width:300px;
-   border-bottom: 1px solid black;
-
- 
-   margin:  0 auto;
-  //  height: 100%;
-   width: 100%;
-//    height: 100vh;
-//    width: 100vw;
-   overflow: auto;
-
+.export:hover{
+     color:whitesmoke;
+     background-color:#1890ff;
+     border-color: #1890ff;
 }
-
-.item{ 
-  box-sizing: border-box;
-  // margin: 10px 0px;
-  // padding: 10px;
-//    color:red;
-   color:black;
-//    background: aqua;
-   background:transparent;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  // height: 100%;
-   height: 50px;  
- 
-//  border-top:1px solid black;
-  border-bottom:1px solid gray;
-//    &:last-child{
-//        border-bottom: 0px ;
-//    }
- } 
+.statfflist-menu{
+  position: relative;
+}
 
 </style>

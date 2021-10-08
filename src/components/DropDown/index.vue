@@ -1,18 +1,30 @@
 <template>
-  
+  <!-- 下拉列表/下拉菜单 -->
+
   <div class="dropdown-container" >
-<div class="title " ref="title" @click="toggle">
-    <i :class="`bi ${dropDownData.iconClass}`"></i>
+<!-- only single title -->
+<router-link :to="dropDownData.to"  v-if="dropDownData.to"  :class="` title  ${$route.path===dropDownData.to ? 'active' : '' }`" ref="title" >
+    <i :class="dropDownData.iconClass"></i>
+    {{dropDownData.title}} 
+</router-link>
+
+
+
+<!-- title -->
+<div v-if="!dropDownData.to"  class="title"  ref="title" @click="toggle" >
+    <i :class="dropDownData.iconClass"></i>
     {{dropDownData.title}} 
 </div>
-<ul :class="`list-group ${ slideDown ? '' :'hiden'}`"  >
 
+
+<!-- list items  / menu items -->
+<ul  v-if="!dropDownData.to"    :class="`list-group ${ slideDown ? '' :'hiden'}`"  >
   <div 
   style="position:relative" 
-  :class="`list-group-item ${$route.path===item.to ? 'active' : '' }`  " 
+  :class="`list-group-item ${$route.path===item.to ? 'active' : '' }`" 
    v-for="(item,i) in dropDownData.items"  :key="i"
    >
-        <RouterLink :to="item.to" style="color:white;text-decoration:none;" >{{item.item}}</RouterLink>
+        <RouterLink :to="item.to" style="color:white;text-decoration:none;display:inline-block;height:100%;width:100%;" >{{item.item}}</RouterLink>
         <span @click="addCacheComp(item.item,item.to,)"  ref="addCache" style="display:inline-block;position:absolute;right:0px;width:20px;"> +</span> 
   </div>
 </ul>
@@ -95,6 +107,8 @@ export default {
 
 <style scoped lang="less">
 .title{
+      color:whitesmoke;
+      display: block;
        height: 50px;
       line-height: 50px;
       box-sizing: border-box;
@@ -124,7 +138,9 @@ export default {
 // }
 
 .list-group-item{
-    
+    padding: 0px;
+    height: 42px;
+    line-height: 42px;
     color:whitesmoke;
       background-color:transparent;
 //    &:hover{
@@ -133,9 +149,9 @@ export default {
     //   background-color:green;
   
 //    }
-&.active{
+
+}
+.active{
     background-color: #0d6efd!important;
 }
-}
-
 </style>

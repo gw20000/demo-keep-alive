@@ -1,5 +1,5 @@
 <template>
-    <div class="item-container" >
+    <div class="list-item-container" >
          <span  v-for="(item,index ) in itemData"  :key="index" >
               {{item}}
          </span>
@@ -17,7 +17,20 @@ export default {
            type:Object,
            default:()=>{}
        }
-    }
+    },
+
+ 
+    // mounted(){
+    //    console.log(("listItem  mounted"));
+    // },
+    // activated(){
+    //     console.log(("listItem  activated"));
+    // },
+    // deactivated(){
+    //      console.log(("listItem  deactivated"));
+
+    // }
+
 }
 </script>
 

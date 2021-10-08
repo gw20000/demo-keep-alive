@@ -1,0 +1,87 @@
+@import "./mixin.less";
+@import "./var.less";
+
+
+
+
+.message{
+	// color:red;
+	color:#fff;
+	.self-center-pos();
+	box-sizing: border-box;
+	z-index: 999;
+	border-radius:5px;
+	padding: 10px 20px;
+	line-height: 2;
+	// text-shadow: 1px 1px rgba(1,1,3,.5);
+	box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+	display: flex; //一行显示
+	align-items:center;//垂直居中
+	transition: .3s;
+	white-space: nowrap;//防止元素宽度受到挤压时，文本换行
+//     :first-child{
+//    	// margin-right:5px;
+//    }
+}
+
+//在less 里面 & 代表接着写   
+.message{
+
+&-success{   // 接着写  结果就是  .message-success
+	background-color:@success;
+}
+
+&-warn{
+	background-color:@warn;
+}
+
+&-error{
+	background-color:@fail;
+
+}
+&-info{
+	background-color:@primary;
+}
+
+}
+
+.icon{
+	margin-right:5px;
+	font-size: 20px;
+}
+
+
+@keyframes pop{
+	0%{   opacity: 0;
+          transform: translate(-50%,100%);
+	}
+	20%{
+           opacity: 1;
+          transform: translate(-50%,-50%);
+	}
+	80%{
+           opacity: 1;
+          transform: translate(-50%,-50%);
+	}
+	100%{
+            opacity: 0;
+          transform: translate(-50%,-100%);
+	}
+
+}
+
+
+.state1{
+	    opacity: 0;
+        transform: translate(-50%,100%);
+}
+
+.state2{
+        opacity: 1;
+        transform: translate(-50%,-50%);
+}
+.state3{
+       
+        opacity: 0;
+        transform: translate(-50%,-100%);
+}

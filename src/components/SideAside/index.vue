@@ -8,7 +8,7 @@
 <i class="bi-chevron-bar-left" style="font-size: 2rem; color: white;"></i>
 </div> -->
 
-<router-link to="/"  :style="{backgroundColor:`${this.$route.path==='/' ? '#0d6efd' : '' }`}" class="home" ><i class="bi bi-house"></i><span>主页</span></router-link>
+<!-- <router-link to="/"  :style="{backgroundColor:`${this.$route.path==='/' ? '#0d6efd' : '' }`}" class="home" ><i class="bi bi-house"></i><span>主页</span></router-link> -->
 
 <DropDown v-for="(item,i) in menuData"  :key="i"  :dropDownData="item" :style="{transform:`translateY(${-i}px)`}"/>
 
@@ -21,7 +21,6 @@
 
 <script>
 import DropDown from "@/components/DropDown"
-import {mapState} from  "vuex"
 export default{
  name:"Layout",
  components:{
@@ -73,6 +72,7 @@ export default{
 <style lang="less" scoped>
 
 .side-aside-container{
+
    color:whitesmoke;
     height: 100%;
     width:100%;
@@ -82,6 +82,7 @@ export default{
     align-items: center;
     cursor: pointer;
     overflow-y: auto;
+    overflow-x:hidden;
 }
 .title{
    flex-shrink: 0;
@@ -109,23 +110,23 @@ export default{
 
 
 
-.home{
-      color: white;
-      box-sizing: border-box;
-      width: 100%;
-       height: 50px;
-      line-height: 50px;
-      box-sizing: border-box;
-      border: 1px solid gray;
-      transform: translateY(1px);
+// .home{
+//       color: white;
+//       box-sizing: border-box;
+//       width: 100%;
+//        height: 50px;
+//       line-height: 50px;
+//       box-sizing: border-box;
+//       border: 1px solid gray;
+//       transform: translateY(1px);
 
-      .bi-house{
-         margin-left:18px;
+//       .bi-house{
+//          margin-left:18px;
          
-      }
-      span{
-            margin-left:20px;
-         margin-right:35px;
-      }
-}
+//       }
+//       span{
+//             margin-left:20px;
+//          margin-right:35px;
+//       }
+// }
 </style>
