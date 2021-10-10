@@ -26,12 +26,16 @@ const cachedComponents =  {
        state.cachedComponents.push(payload);
     },
     removeCachedComponent(state,payload){
+      
   state.cachedComponents.findIndex((i,index,initArr)=>{
           if(i.to===payload){
            initArr.splice(index,1);
             return true;
           }
       });
+    },
+    removeAllCachedComponents(state){
+      state.cachedComponents = [];
     }
   },
   //仓库的计算属性 

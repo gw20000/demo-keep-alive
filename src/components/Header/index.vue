@@ -103,6 +103,8 @@ methods:{
    handleLogout(){
       this.$store.commit("user/setLogout");
      this.$router.push({name:'Login'});
+     this.$store.commit("cachedComponents/removeAllCachedComponents");
+
    },
   
   

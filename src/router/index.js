@@ -187,7 +187,8 @@ if(status=='unlogin'){
    }
    //如果已经登录（或登录信息未失效），恢复登录状态
   else{
-    store.commit('user/recoverLoginState');
+    if(store.state.user.user=='') store.commit('user/recoverLoginState');
+
      next();
   }
 
