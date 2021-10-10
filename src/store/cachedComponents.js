@@ -49,6 +49,6 @@ const cachedComponents =  {
   }
 
 }
-window.cachedComponents = cachedComponents;
+// window.cachedComponents = cachedComponents;
 
 export default cachedComponents;

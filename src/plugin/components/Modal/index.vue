@@ -5,7 +5,7 @@
     </a-button> -->
     <a-modal
 
-     v-model="_visible" title="新增员工" on-ok="handleOk">
+     v-model="_visible" :title="title" on-ok="handleOk">
 
       <template slot="footer">
         <a-button key="back" @click="handleCancel">
@@ -16,12 +16,16 @@
         </a-button>
       </template>
       
-
-        <Form :doSubmit="doSubmit"
+     
+        <!-- <Form :doSubmit="doSubmit"
          @submited="doSubmit=$event"
           @changeV="$emit('changeV',$event)"
           @success="$emit('success',$event)"
           />
+       -->
+         <slot name="default" :doSubmit="doSubmit" >
+           
+            </slot>
       
 
     </a-modal>
@@ -35,9 +39,20 @@ export default {
     event: "changeV"
   },
   props:{
+    //模态框 标题
+       title:{
+          type:String,
+          default:'title'
+       },
+       //模态框 是否可见
        visible:{
          type:Boolean,
          default:false,
+       },
+       //form表单提交之后，是否有了结果；有了结果 ，点击 模态框【提交】按钮 才会触发 表单提交
+       submitHasResult:{
+           type:Boolean,
+           default:false
        }
   },
   data() {
@@ -67,9 +82,10 @@ export default {
     handleOk(e) {
       this.loading = true;
       setTimeout(() => {
+         console.log("doSubmit 前前",this.doSubmit);
 
         this.doSubmit = true;
-        console.log("doSubmit",this.doSubmit);
+        console.log("doSubmit 后后",this.doSubmit);
 
 
 
@@ -77,7 +93,7 @@ export default {
             // this.$emit("changeV",false);
         this.loading = false;
       }, 1000);
-
+       
 
     },
     handleCancel(e) {
@@ -85,6 +101,13 @@ export default {
           this.$emit("changeV",false);
     },
   },
+  watch:{
+        submitHasResult(){
+
+          if(this.submitHasResult==true) this.doSubmit=false;
+           console.log('reset doSubmit false');
+        }
+  }
 };
 </script>
 

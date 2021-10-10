@@ -16,7 +16,20 @@
 
 <!-- 模态框 -->
 
-<Modal v-model="visible" @success=" gengxin({addSuccess:$event}) "/>
+<Modal v-model="visible" :submitHasResult="submitHasResult" title="新增员工">      
+  
+     <template name="default" v-slot:default="{doSubmit}">
+
+        <!-- 临时变量doSubmit是来控制Form提交的 -->
+         <Form :doSubmit="doSubmit"
+         @submited="setSubmitHasResult"
+          @changeV="visible=$event"
+          @success="$event ? gengxin({addSuccess:$event}) : '' "
+          />
+      
+     </template>
+  
+    </Modal>
 
 <!-- <div class="test-container" style="background-color:green;height:500px;width:500px;position:fixed;z-index:1050;" @click="$event.target.style.backgroundColor='red'">  
 
@@ -124,6 +137,7 @@ export default {
        pageItems:4,
        //总数据量
        dataAmount:0,
+       //Modal是否可见
        visible:false,
        totalData:[],
        del,
@@ -131,7 +145,10 @@ export default {
        n:0,
        activePag:0,
        initPageNav:false,
-       
+       //提交表单是否 响应正确的结果
+       success:false,
+       //Form表单提交了，是否有了结果（有了结果，才允许下一次提交）
+       submitHasResult:false,
        
       }
   },
@@ -176,10 +193,18 @@ export default {
     
   },
   methods:{
+  //表单提交有了结果，才可以触发下一次提交。
+     setSubmitHasResult($event){
+       this.submitHasResult=!$event;
+       this.$nextTick(()=>{
+         this.submitHasResult=false;
+       });
+     }
+     ,
 
      showConfirm() {
       this.$confirm({
-        title: '确定要下载员工列表到excel文件吗?',
+        title: '确定要下载「员工列表」到excel文件吗?',
         // content: 'When clicked the OK button, this dialog will be closed after 1 second',
          okText: '确认',
         cancelText: '取消',

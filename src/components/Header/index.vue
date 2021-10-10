@@ -22,14 +22,33 @@
       <div class="login-logout">
       <a-dropdown>
     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-      张居正 <a-icon type="down" />
+     {{loginState=='login' ? user.username : '未登录'}} <a-icon type="down" />
     </a>
     <a-menu slot="overlay" >
       <a-menu-item  >
-        <a href="javascript:;" class="slect-item"><a-icon  type="logout" /> <span >注销登录</span></a>
+        <!-- href="javascript:console.log('logout');" -->
+       <a v-if="loginState=='login'" @click="handleLogout"  class="slect-item"><a-icon  type="logout" /> <span style="padding-right:16px" >&nbsp;&nbsp;&nbsp;退出</span></a>
+
+        <a v-else  @click="handleLogin"  class="slect-item"><a-icon  type="login" /> <span style="padding-right:16px" >&nbsp;&nbsp;&nbsp;登录</span></a>
+
       </a-menu-item>
-        <a-menu-item >
-        <a href="javascript:;" class="slect-item"><a-icon type="lock"  /><span>修改密码</span></a>
+        <a-menu-item v-if="loginState=='login'">
+        <a  @click="visible=true" class="slect-item"><a-icon type="lock"  /><span>修改密码</span></a>
+     
+
+ <!-- 模态框：修改密码 -->
+    <Modal v-model="visible" title="修改密码" :submitHasResult="submitHasResult">
+      
+        <template name="default" v-slot:default="{doSubmit}">
+      <FormModifyPwd :doSubmit="doSubmit"
+        @submited="setSubmitHasResult"
+          @changeV="visible=$event"
+      />
+       </template>
+    </Modal>
+
+
+
       </a-menu-item>
     </a-menu>
   </a-dropdown>
@@ -40,10 +59,13 @@
 
 <script>
 import Item from "@/components/Item"
-export default {
+import FormModifyPwd from "./components/FormModifyPwd"
+import{mapState,mapGetters} from "vuex"
+export default { 
 name:"Header",
 components:{
     Item,
+    FormModifyPwd
 },
 props:{
     headerData:{
@@ -59,6 +81,8 @@ props:{
 data(){
    return {
        windowWidth:window.innerWidth,
+       visible:false,
+       submitHasResult:false,
 
    }
 },
@@ -66,9 +90,29 @@ computed:{
   headerWidth(){
       console.log("headerWidth",this.windowWidth - this.sideAsideWidth);
        return this.windowWidth - this.sideAsideWidth;
-  }
+  },
+  ...mapState("user",["user"]),
+  ...mapGetters('user',['loginState'])
 },
 methods:{
+
+   handleLogin(){
+   
+     this.$router.push({name:'Login'});
+   },
+   handleLogout(){
+      this.$store.commit("user/setLogout");
+     this.$router.push({name:'Login'});
+   },
+  
+  
+  //表单提交有了结果，才可以触发下一次提交。
+     setSubmitHasResult($event){
+       this.submitHasResult=!$event;
+       this.$nextTick(()=>{
+         this.submitHasResult=false;
+       });
+     },
     removeCacheComp(to){
         console.log("cache remove comp",to);
        this.$store.commit("cachedComponents/removeCachedComponent",to);

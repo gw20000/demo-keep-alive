@@ -39,7 +39,7 @@ export default {
 .input-container{
    position: relative;
   margin: 10px auto;
-width:80%;
+   max-width: 500px;  
 }
 .search-btn{
 position: absolute;
@@ -72,6 +72,10 @@ padding-left:20px;
 
 
 }
-
+@media(max-width:650px){
+    .input-container{
+        max-width: 300px;
+    }
+}
 
 </style>

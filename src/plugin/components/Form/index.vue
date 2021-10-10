@@ -3,7 +3,7 @@
 <div class="form-container" >
   <a-form :form="form" >
     
-    <a-form-item v-bind="formItemLayout">
+    <a-form-item   has-feedback v-bind="formItemLayout">
       <span slot="label">
        姓名
        
@@ -20,7 +20,7 @@
    
 
 
-    <a-form-item v-bind="formItemLayout" label="手机号">
+    <a-form-item has-feedback v-bind="formItemLayout" label="手机号">
       <a-input
         v-decorator="[
           'tel',
@@ -182,7 +182,7 @@ export default {
 
   methods: {
 
-    handleSubmit() {
+    async handleSubmit() {
    //提交之前， 表单输入验证
  this.form.validateFieldsAndScroll( async (err, values) => {
         if (!err) {
@@ -247,12 +247,15 @@ export default {
 
   },
 watch:{
-    doSubmit(){
-        console.log("doSubmit");
+    doSubmit:{
+
+     async handler(){
+
+         
          if (this.doSubmit==true ) {
 
-
-           this.handleSubmit();  
+        console.log(" trigger doSubmit",this.doSubmit);
+          await  this.handleSubmit();  
 
        
         this.$emit("submited",false);
@@ -261,6 +264,9 @@ watch:{
       
 
          } 
+
+      }
+     
          
     }
 }

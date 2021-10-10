@@ -10,6 +10,7 @@
   "dependencies": {
     "@vue/compiler-sfc": "^3.2.19",
     "ant-design-vue": "^1.7.8",
+    "axios": "^0.22.0",
     "bufferutil": "^4.0.4",
     "canvas": "^2.8.0",
     "core-js": "^3.6.5",
