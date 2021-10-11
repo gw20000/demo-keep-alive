@@ -75,6 +75,7 @@ export default {
     overflow: hidden;
  }
  .main{
+     
        flex: 1 1 auto;
        background: yellow;
        height: 100%;

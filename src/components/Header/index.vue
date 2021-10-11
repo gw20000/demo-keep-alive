@@ -11,10 +11,10 @@
        <!-- 页面缓存 -->
        <div class="cache-pages "  id="scroll-1"   >
         <div  class="cache-item"  v-for=" (item,i) in headerData" :key="i">
-       <router-link  :to="`${item.to}`" style="text-decoration:none;">
-       <Item   style="min-width:100px;draggable:true;" :content="item.name" />
+       <router-link  :to="item.to" style="text-decoration:none;">
+       <Item   style="min-width:100px;draggable:true;border-style:none;" :content="item.item" />
         </router-link>
-         <span  @click="removeCacheComp(item.to)"    style="width:15px;cursor:pointer">x</span>
+         <span  @click="removeCacheComp(item)"    style="width:15px;cursor:pointer">x</span>
         </div>
       </div>
 
@@ -70,7 +70,7 @@ components:{
 props:{
     headerData:{
         type:Array,
-        default:()=>{return [{"to":"path1","name":"pageName1"},{"to":"path2","name":"pageName2"}]}
+        default:()=>{return [{"to":{name:"routeName1"},"name":"pageName1"},{"to":{name:"routeName2"},"name":"pageName2"}]}
     },
     sideAsideWidth:{
         type:Number,
@@ -124,6 +124,11 @@ methods:{
     },
 
 },
+// watch:{
+//         headerData(){
+//           console.log("headerData",this.headerData);
+//         }
+// },
 mounted(){
        this.windowWidth = window.innerWidth;
    window.addEventListener('resize',()=>{
@@ -136,6 +141,7 @@ mounted(){
 
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";
+@import "~@/styles/var.less";
 .header-container{
 // position: relative;
 transition: width .5s;
@@ -152,9 +158,10 @@ flex-wrap: nowrap;
 
 }
 .cache-item{
+    border-style: none;
     display: flex;
     justify-content: space-between;
-    background-color: turquoise;
+    background-color: @blue;
     align-items: center;
     border-radius: 7px;
     margin-right: 10px;

@@ -7,7 +7,7 @@ import  cachedComponents from "./cachedComponents"
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+let store = new Vuex.Store({
   strict:true,
   modules: {
     user,
@@ -15,5 +15,7 @@ export default new Vuex.Store({
     cachedComponents,
     
   },
-  
+
 })
+window.store = store;
+export default store

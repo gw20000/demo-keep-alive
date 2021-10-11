@@ -1,5 +1,5 @@
 <template>
-  <div class="about-container" >
+  <div class="staff-list-container" >
     <h1>员工列表</h1>
      <Input placeholder="Search staffs..." @input="val=$event"/>
   <div class="statfflist-menu d-flex justify-content-between px-3" ref="msgContainer">
@@ -358,8 +358,10 @@ export default {
 
 
 <style lang="less" scoped>
-.about-container{
+.staff-list-container{
    width:100%;
+  overflow-x:hidden;
+
  
 }
 h1{

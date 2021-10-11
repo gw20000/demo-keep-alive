@@ -1,5 +1,5 @@
 <template>
-  <div class="about-container" >
+  <div class="friends-container" >
     <h1>好友</h1>
      <Input placeholder="Search staffs..." @input="val=$event"/>
      <!-- <keep-alive :include="['VirtualScroller']" > -->
@@ -72,16 +72,16 @@ export default {
      
       },
 
-      // activated(){
-      //   console.log("StaffList 显示了");
+      activated(){
+        console.log("Friends 显示了");
 
     
       
-      // },
-      // deactivated(){
-      //   console.log("StaffList 隐藏了");
-      //   this.getAllStudents();
-      // },
+      },
+      deactivated(){
+        console.log("Friends 隐藏了");
+        // this.getAllStudents();
+      },
 
       
 
@@ -92,7 +92,7 @@ export default {
 
 
 <style lang="less" scoped>
-.about-container{
+.friends-container{
    width:100%;
  
 }

@@ -3,32 +3,37 @@
 
   <div class="dropdown-container" >
 <!-- only single title -->
-<router-link :to="dropDownData.to"  v-if="dropDownData.to"  :class="` title  ${$route.path===dropDownData.to ? 'active' : '' }`" ref="title" >
+<router-link :to="dropDownData.to"  v-if="dropDownData.to" 
+ :class="` title  ${$route.name===dropDownData.to.name ? 'active' : '' }`" ref="title" >
     <i :class="dropDownData.iconClass"></i>
     {{dropDownData.title}} 
 </router-link>
 
 
-
+<!-- title with menu items -->
+<template  v-if="!dropDownData.to">
 <!-- title -->
-<div v-if="!dropDownData.to"  class="title"  ref="title" @click="toggle" >
+<div   class="title"  ref="title"  @click="toggle" >
     <i :class="dropDownData.iconClass"></i>
     {{dropDownData.title}} 
 </div>
 
 
 <!-- list items  / menu items -->
-<ul  v-if="!dropDownData.to"    :class="`list-group ${ slideDown ? '' :'hiden'}`"  >
+<ul   :class="`list-group ${ slideDown ? '' :'hiden'}`"  >
   <div 
   style="position:relative" 
-  :class="`list-group-item ${$route.path===item.to ? 'active' : '' }`" 
+  :class="`list-group-item ${$route.name===item.to.name ? 'active' : '' }`" 
    v-for="(item,i) in dropDownData.items"  :key="i"
    >
-        <RouterLink :to="item.to" style="color:white;text-decoration:none;display:inline-block;height:100%;width:100%;" >{{item.item}}</RouterLink>
-        <span @click="addCacheComp(item.item,item.to,)"  ref="addCache" style="display:inline-block;position:absolute;right:0px;width:20px;"> +</span> 
+        <RouterLink :to="item.to"  class="sub-menu-item"  >{{item.item}}</RouterLink>
+        <span @click="addCacheComp(item)" class="addCache"> +</span> 
   </div>
 </ul>
+</template>
+
 </div>
+
 </template>
 
 <script>
@@ -41,7 +46,7 @@ export default {
       dropDownData:{
           type:Object,
           required:true,
-          default:()=>{return {title:"title",items:[1,2,3]}},//数据格式示范
+          default:()=>{return {title:"title",iconClass:"home",items:[{item:"员工列表",to:{name:"StaffList"}},{item,to:{}},]}},//数据格式示范
       }
   },
   data(){
@@ -74,12 +79,12 @@ export default {
     handleSlideDown(){
         const items= this.dropDownData.items;
         for (var prop in items) {
-           if(items[prop].to===this.$route.path) this.slideDown=true;
+           if(items[prop].to.name===this.$route.name) this.slideDown=true;
           }
     },
-    addCacheComp(name,to){
-        console.log("cache add comp",to);
-        this.$store.commit("cachedComponents/addCachedComponent",{to,name});
+    addCacheComp(item){
+     
+        this.$store.commit("cachedComponents/addCachedComponent",item);
     
     }
  },
@@ -90,7 +95,10 @@ export default {
              this.handleSlideDown();
          }
 
-     }
+     },
+    //  $route(){
+    //      console.log(this.$route,this.$router);
+    //  }
 
  },
  created(){
@@ -99,7 +107,7 @@ export default {
  },
  mounted(){
     this.n = 1;
-     this.$refs.addCache
+   
  }
 }
 
@@ -115,14 +123,24 @@ export default {
       border: 1px solid gray;
 }
 
+.sub-menu-item{
+    color:white;
+    text-decoration:none;
+    display:inline-block;
+    height:100%;
+    width:100%;
+}
+
 .dropdown-container{
    
     width:100%;
-   .menu-item{
-      height: 50px;
-      line-height: 50px;
-   }
+//    .menu-item{
+//       height: 50px;
+//       line-height: 50px;
+//    }
 }
+
+
 .hiden{
   height: 0px;
   overflow-y: hidden;
@@ -154,4 +172,13 @@ export default {
 .active{
     background-color: #0d6efd!important;
 }
+
+.addCache{
+display:inline-block;
+position:absolute;
+right:0px;
+width:20px;
+}
+
+
 </style>

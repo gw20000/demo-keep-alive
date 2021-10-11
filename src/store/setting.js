@@ -15,28 +15,29 @@ export default {
                {
                     title: "主页",  
                     iconClass: "iconfont icon-zhuye",
-                    to:"/",
+                    // to:"/",
+                    items: [
+                         { item: "统计" ,to:{name:"Index"} },
+                    ]
                  
-
                },
-
-               
-               {
+             
+              {
                     title: "员工管理",
                     iconClass: "bi bi-person-circle",
                     items: [
-                         { item: "员工列表", to: "/stafflist" },
+                         { item: "员工列表" ,to:{name:"StaffList"} },
                          { item: "xxx", to: "" },
                          { item: "xxx", to: "" },
 
                     ]
                },
                {
-                    title: "订单管理",
+                    title: "工单管理",
                     iconClass: "bi bi-card-list",
                     items: [
-                         { item: "订单列表", to: "/orderlist" },
-                         { item: "xxx", to: "" },
+                         { item: "工单列表", to:{name:"OrderList"} },
+                         { item: "添加工单", to:{name:"Add"}  },
                          { item: "xxx", to: "" },
                     ]
                },
@@ -44,21 +45,16 @@ export default {
                     title: "个人中心",
                     iconClass: "iconfont  icon-set_about_hov",
                     items: [
-                         { item: "个人信息", to: "/about" },
-                         { item: "聊天", to: "/chat" },
-                         { item: "好友", to: "/friends" },
-                      
-                      
-
-
-                    
+                         { item: "个人信息", to:{name:"About"}  },
+                         { item: "聊天",to:{name:"Chat"}  },
+                         { item: "好友", to:{name:"Friends"}  },
                     ]
 
                },
                {
                     title: "新闻",  
                     iconClass: "iconfont  icon-set_about_hov",
-                    to:"/news",
+                    to:{name:"News"} 
                  
 
                },

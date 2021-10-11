@@ -11,16 +11,17 @@
           </template >
            <template #default>
             
-              <Header :headerData="cachedComponents" :sideAsideWidth="isCollpase ? 0 : 200" />
+              <Header class="header"   :headerData="cachedComponents" :sideAsideWidth="isCollpase ? 0 : 200" />
                <div class="route-pointer">
              {{`上海青浦苏宁电器管理系统 ${$route.meta.module ? "/ "+$route.meta.module : ''} / ${$route.meta.title}`}}
               </div>
         
               
-         
-              <keep-alive :include="cachedCompNames" :max="10">
+         <!-- :include="cachedCompNames"  :max="3" -->
+              <keep-alive :include="cachedCompNames2" >
               <RouterView/>
               </keep-alive>
+
           </template >
            <template #right>
          
@@ -57,7 +58,7 @@ export default {
     ...mapState('setting',["menuData","isCollpase"]),
 
     ...mapState('cachedComponents',["cachedComponents"]),
-    ...mapGetters('cachedComponents',["cachedCompNames"]),//等同于下面这个计算属性的写法：//仓库的计算属性类似组件的计算属性，也是有缓存的
+    ...mapGetters('cachedComponents',["cachedCompNames","cachedCompNames2"]),//等同于下面这个计算属性的写法：//仓库的计算属性类似组件的计算属性，也是有缓存的
     
       //  cachedCompNames(){
       //   return  this.$store.getters["cachedComponents/cachedCompNames"];
@@ -81,7 +82,13 @@ mounted(){
 
 
 .route-pointer{
+
+  margin-top:50px;
   text-align: left;
 }
-
+.header{
+  position: fixed;
+ 
+  opacity: .9;
+}
 </style>

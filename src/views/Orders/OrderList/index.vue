@@ -1,6 +1,6 @@
 <template>
-  <div class="home-container">
-    <h1>订单列表</h1>
+  <div class="order-list-container">
+    <h1>工单列表</h1>
     <Input placeholder="Search orders..."/>
 
     <VirtualScroller v-if="false" class="longlist"  style="font-size:16px;"  :data="data"  :itemHeight="50" :keyField="'id'">
@@ -71,11 +71,17 @@ export default {
           this.getAllStudents();
 
       },
+      deactived(){
+         console.log(" orderlist 隐藏了");
+      },
+         activated(){
+         console.log(" orderlist 显示了");
+      }
 
 }
 </script>
 <style lang="less" scoped>
-.home-container{
+.order-list-container{
  width: 100%;
 }
 

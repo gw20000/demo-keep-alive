@@ -76,14 +76,16 @@ export default {
 </script>
 <style lang="less" scoped>
 .news-container{
-margin: 0px auto;
- width: 60%;
+ padding: 0px 10px;
+ width: 80%;
+ margin:0 auto;
 }
 
-@media (max-width:415px){
+@media (max-width:650px){
   .news-container{
 
  width: 100%;
+
 }
 
 }
