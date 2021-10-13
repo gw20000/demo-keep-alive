@@ -1,12 +1,20 @@
 <template>
   <div class="index-container">
-    <h1>统计</h1>
+     <Card />
+     <Chart/>
   </div>
 </template>
 
 <script>
+import Card from "./Card.vue"
+import Chart from "./Chart.vue"
 export default {
   name:"Index",
+  components:{
+     Card,
+     Chart,
+  
+  }
 }
 </script>
 <style lang="less" scoped>

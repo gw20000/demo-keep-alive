@@ -8,6 +8,7 @@ import Modal from "./components/Modal"
 import Form from "./components/Form"
 // import loadingBar from "./loadingBar"
 
+
 export default {
 
 

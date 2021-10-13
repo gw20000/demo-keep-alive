@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VCharts from 'v-charts'
 
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -7,6 +8,7 @@ import 'ant-design-vue/dist/antd.css';
 // Vue.use(Form);
 // Vue.use(Modal);
 Vue.use(Antd);
+Vue.use(VCharts);
 // console.log(Antd);
 // console.log(Button);
 import MyPlugin from "@/plugin"
