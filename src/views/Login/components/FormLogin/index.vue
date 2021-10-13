@@ -46,13 +46,13 @@
       </a-input>
     </a-form-item>
 
- <a-form-item v-bind="tailFormItemLayout">
-     <a-button type="primary" html-type="submit" class="login-form-button">
-        登录
+ <a-form-item v-bind="tailFormItemLayout" style="position:relative" >
+     <a-button :loading="loading" type="primary"  html-type="submit" class="login-form-button">
+       登录 
       </a-button>
-
+      
        <a href="">
-        注册
+        注 册
       </a>
 
 </a-form-item>
@@ -90,6 +90,7 @@ export default {
           },
         },
       },
+      loading:false,
         }
     },
   beforeCreate() {
@@ -115,11 +116,12 @@ export default {
       },
       //🔥表单提交
      handleSubmit(e) {
+   
       e.preventDefault();
       this.form.validateFields( async (err, values) => {
           
         if (!err) {
-
+                         this.loading = true;
                     //  console.log("values",values);
         
                       const resp=  await user.login(values);
@@ -131,10 +133,10 @@ export default {
                          //跳转到主页
                          console.log(this.$route.query.name);
                          console.log( this.$store.state.user.user);
-
+                       
                         if(this.$route.query.name) this.$router.push({name:this.$route.query.name});
                         else this.$router.push({name:'Home'});
-
+                          this.loading = false;
                       } 
 
                 
@@ -151,7 +153,8 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="less" scoped>
+@import "~@/styles/mixin.less";
 #login .login-form {
   max-width: 500px;
   
@@ -162,5 +165,7 @@ export default {
 #login .login-form-button {
   width: 100%;
 }
-
+.center{
+  .self-center-pos();
+}
 </style>
