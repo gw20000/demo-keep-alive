@@ -19,7 +19,7 @@ const routes = [
     //🌈对嵌套路由的说明：  路由的嵌套关系（组件ViewRouter的位置） 必须 与 组件的嵌套关系 保持(对应)一致 
     children:[
 
-
+ 
 
 
       //主页
@@ -36,6 +36,23 @@ const routes = [
           // auth:true,
          },
          children:[
+
+//             //首页index.html
+// {
+//   path: '/index.html',
+//   name: 'index.html',
+//   // route level code-splitting
+//   // this generates a separate chunk (about.[hash].js) for this route
+//   // which is lazy-loaded when the route is visited.
+//   component: () => import(/* webpackChunkName: "about" */ '@/views/Home'),
+//   meta:{
+//     title:"首页"
+//    }
+// },
+
+
+
+
           {
             path: 'index',
             name: 'Index',
@@ -200,6 +217,23 @@ const routes = [
      ]
   },
 
+
+
+              //首页index.html
+{
+  path: '/index.html',
+  name: 'index.html',
+ redirect:"/login",
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '@/views/Login'),
+  meta:{
+    title:"登录"
+   }
+},
+
+
 //登录
 {
   path: '/login',
@@ -212,6 +246,8 @@ const routes = [
     title:"登录"
    }
 },
+
+
 //404
 {
   path: '*',
