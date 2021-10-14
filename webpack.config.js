@@ -5,6 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
      
       
-       devtool: process.env.NODE_ENV==='production' ? false : true,
+       // devtool: process.env.NODE_ENV==='production' ? '' : "source-map",
 
 };

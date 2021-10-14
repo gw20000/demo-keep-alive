@@ -125,7 +125,7 @@ export default {
                     //  console.log("values",values);
         
                       const resp=  await user.login(values);
-                      
+                        this.loading = false;
                       if(resp){
                          //更新仓库用户信息
                           
@@ -136,8 +136,8 @@ export default {
                        
                         if(this.$route.query.name) this.$router.push({name:this.$route.query.name});
                         else this.$router.push({name:'Home'});
-                          this.loading = false;
-                      } 
+                        
+                      }
 
                 
 

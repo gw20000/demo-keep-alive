@@ -58,21 +58,27 @@ export default {
    },
    mounted(){
         document.body.addEventListener('touchstart',(e)=>{
+            let valve = 150;
+             let timeStart = +new Date();
 
               //如果是电脑端
                if(!this.isMobile){
                        //   console.log("x1",e.touches[0].clientX);
                 let x1 = e.touches[0].clientX
                 
+                 
+
+
                document.body.addEventListener('touchmove',(e)=>{
             //   console.log("x2",e.touches[0].clientX);
                   if(e.touches[0].clientY<60)return;
                 
                   let x2 = e.touches[0].clientX
                   let  diff = x2-x1;
-                  if(diff>50){
+                 
+                  if(diff>50  && (Math.abs(+new Date()-timeStart) < valve) ){
                         this.$store.commit("setting/setColapsFalse");
-                  }else if(diff<-50){
+                  }else if(diff<-50 && (Math.abs(+new Date()-timeStart) < valve) ){
                          this.$store.commit("setting/setColapsTrue");
                   }
 
@@ -94,9 +100,9 @@ export default {
                 
                   let y2 = e.touches[0].clientY
                   let  diff = y2-y1;
-                  if(diff>50){
+                  if(diff>50  && (Math.abs(+new Date()-timeStart) < valve) ){
                         this.$store.commit("setting/setColapsFalse");
-                  }else if(diff<-50){
+                  }else if(diff<-50  && (Math.abs(+new Date()-timeStart) < valve) ){
                          this.$store.commit("setting/setColapsTrue");
                   }
 
