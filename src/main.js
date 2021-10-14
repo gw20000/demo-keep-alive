@@ -1,4 +1,7 @@
 import Vue from 'vue'
+window.console.log = function(){
+
+}
 import VCharts from 'v-charts'
 
 import Antd from 'ant-design-vue';
@@ -31,6 +34,3 @@ const vm = new Vue({
 // document.title = `${process.env.VUE_APP_TITLE}-${vm.$route.meta.title}`//拿不到路有信息，因为，main.js不受路由管制
 
 
-// window.console.log = function(){
-
-// }

@@ -84,7 +84,9 @@ export default {
 @media (max-width:650px){
   .news-container{
 
- width: 100%;
+   width:100%;
+  overflow-x:hidden;
+
 
 }
 

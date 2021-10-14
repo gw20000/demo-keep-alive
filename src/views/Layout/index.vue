@@ -1,9 +1,8 @@
 <template>
   <div class="layout-container">
 
-
-
-    <Layout1 :leftWidth="isCollpase ? 0 : 200">
+    <!-- 如果不是移动端 -->
+    <Layout1  v-if="!isMobile"   :leftWidth="isCollpase ? 0 : 200"   >
           <template #left>
 
            <SideAside :menuData="menuData"/>
@@ -28,6 +27,40 @@
             
           </template>
       </Layout1>
+
+
+
+
+
+<!-- 如果是移动端 -->
+    <Layout1   v-if="isMobile"  :leftHeight="isCollpase ? 0 : 500">
+          <template #left>
+
+           <SideAside :menuData="menuData"/>
+ 
+          </template >
+           <template #default>
+            
+              <Header class="header"   :headerData="cachedComponents" :sideAsideWidth="isCollpase ? 0 : 200" />
+               <div class="route-pointer">
+             {{`上海青浦苏宁电器管理系统 ${$route.meta.module ? "/ "+$route.meta.module : ''} / ${$route.meta.title}`}}
+              </div>
+        
+              
+         <!-- :include="cachedCompNames"  :max="3" -->
+              <keep-alive :include="cachedCompNames2" >
+              <RouterView/>
+              </keep-alive>
+
+          </template >
+           <template #right>
+         
+            
+          </template>
+      </Layout1>
+
+
+
   </div>
 </template>
 
@@ -55,7 +88,7 @@ export default {
    //  newMenuData(){
    //     return this.menuData;
    //  },
-    ...mapState('setting',["menuData","isCollpase"]),
+    ...mapState('setting',["menuData","isCollpase","isMobile"]),
 
     ...mapState('cachedComponents',["cachedComponents"]),
     ...mapGetters('cachedComponents',["cachedCompNames","cachedCompNames2"]),//等同于下面这个计算属性的写法：//仓库的计算属性类似组件的计算属性，也是有缓存的

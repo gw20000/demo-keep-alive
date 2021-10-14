@@ -27,8 +27,8 @@ export default {
                     iconClass: "bi bi-person-circle",
                     items: [
                          { item: "员工列表" ,to:{name:"StaffList"} },
-                         { item: "xxx", to: "" },
-                         { item: "xxx", to: "" },
+                         // { item: "xxx", to: "" },
+                         // { item: "xxx", to: "" },
 
                     ]
                },
@@ -38,7 +38,7 @@ export default {
                     items: [
                          { item: "工单列表", to:{name:"OrderList"} },
                          { item: "添加工单", to:{name:"Add"}  },
-                         { item: "xxx", to: "" },
+                         // { item: "xxx", to: "" },
                     ]
                },
                {
@@ -63,7 +63,12 @@ export default {
 
 
           ],
+          //PC端左侧菜单/移动端顶部菜单 是否折叠
           isCollpase:true,
+          // 是否是移动端
+          isMobile:true,
+          
+
           
      },
      mutations: {
@@ -82,6 +87,11 @@ export default {
                state.isCollpase = false;
               console.log("isCollpase",state.isCollpase);
           },
+          setIsMobile(state,payload){
+               state.isMobile = payload;
+
+               console.log("state:IsMobile",state.isMobile);
+          }
           
           
      },

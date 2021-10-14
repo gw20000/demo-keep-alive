@@ -137,7 +137,7 @@ if(!success) return {
 
 const data = await getAll();
  
- const student  =  new Student(options.id,`${options.name}${options.id}`,["男","女"][options.sex],+new Date()) ;
+ const student  =  new Student(options.id,options.name,["男","女"][options.sex],+new Date()) ;
     
 data.unshift(student);
 
